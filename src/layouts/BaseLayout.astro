@@ -1,7 +1,14 @@
+---
+type Props = {
+  title: string;
+};
+const { title } = Astro.props;
+---
+
 <!doctype html>
 <html lang="ja">
   <head>
-    <title>Astro-microcms-blog</title>
+    <title>{title}</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
   </head>

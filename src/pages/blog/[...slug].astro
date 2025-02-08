@@ -1,5 +1,28 @@
 ---
+import BaseLayout from "~/layouts/BaseLayout.astro";
+import { getBlogs } from "~/libs/microcms.ts";
 
+const blogs = await getBlogs();
+
+const response = blogs.contents.map((content) => {
+  return content as { id: string; title: string; content: string };
+});
+
+const pages = response.map((res) => {
+  return {
+    slug: res.id,
+    title: res.title,
+    text: res.content,
+  };
+});
+
+const { slug } = Astro.params;
+const page = await pages.find((page) => page.slug === slug);
+if (!page) return Astro.redirect("/404");
+const { title, text } = page;
 ---
 
-<div class="">slug</div>
+<BaseLayout title={title}>
+  <h1>{title}</h1>
+  <p>{text}</p>
+</BaseLayout>

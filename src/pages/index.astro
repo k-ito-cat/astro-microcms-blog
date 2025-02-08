@@ -1,5 +1,22 @@
 ---
 import BaseLayout from "~/layouts/BaseLayout.astro";
+import { getBlogs } from "~/libs/microcms.ts";
+
+const _getBlogs = await getBlogs({ fields: ["id", "title", "content"] });
+console.log(_getBlogs.contents);
 ---
 
-<BaseLayout>index.astro</BaseLayout>
+<BaseLayout title="ブログ一覧">
+  <ul>
+    {
+      _getBlogs.contents.map((content) => (
+        <li>
+          <a href={`/blog/${content.id}`}>
+            <p>{content.title}</p>
+            <div>{content.content}</div>
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</BaseLayout>
