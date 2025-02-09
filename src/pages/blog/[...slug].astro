@@ -1,4 +1,5 @@
 ---
+import { Image } from "astro:assets";
 import Prose from "~/components/Prose.astro";
 import BaseLayout from "~/layouts/BaseLayout.astro";
 import { getBlogs } from "~/libs/microcms.ts";
@@ -6,7 +7,7 @@ import { getBlogs } from "~/libs/microcms.ts";
 const blogs = await getBlogs();
 
 const response = blogs.contents.map((content) => {
-  return content as { id: string; title: string; content: string };
+  return content;
 });
 
 const pages = response.map((res) => {
@@ -14,16 +15,88 @@ const pages = response.map((res) => {
     slug: res.id,
     title: res.title,
     content: res.content,
+    categories: res.categories ? res.categories : [],
+    publishedAt: res.publishedAt,
+    eyecatchAlt:
+      res.eyecatch && res.eyecatch.alt ? res.eyecatch.alt : res.title,
+    eyecatchUrl: res.eyecatch && res.eyecatch.url ? res.eyecatch.url : "",
   };
 });
 
 const { slug } = Astro.params;
 const page = await pages.find((page) => page.slug === slug);
 if (!page) return Astro.redirect("/404");
-const { title, content } = page;
+const { title, content, categories, publishedAt, eyecatchAlt, eyecatchUrl } =
+  page;
 ---
 
 <BaseLayout title={`ブログ｜${title}`}>
-  <h1>{title}</h1>
-  <Prose html={content} />
+  <main class="mx-auto max-w-[1200px] bg-transparent px-4 py-8">
+    <a href="/"> 一覧に戻る </a>
+    <article class="bg-card rounded-lg p-8 shadow-[0_4px_15px_rgba(0,0,0,0.7)]">
+      <header class="mb-8">
+        <h1 class="text-heading-first mb-2 font-semibold">
+          {title}
+        </h1>
+        <div class="text-meta mb-6 flex gap-4 text-[0.9rem]">
+          <span class="text-[0.85rem] text-[#999999]">
+            {new Date(publishedAt).toLocaleDateString()}
+          </span>
+        </div>
+
+        {
+          categories.length > 0 && (
+            <div class="flex items-center gap-2 text-[0.9rem]">
+              <ul class="flex flex-wrap gap-2">
+                {categories.map((category: string) => {
+                  return (
+                    <li>
+                      <a
+                        href={`#${category}`}
+                        class="text-primary bg-tag ease hover:bg-tag-hover rounded px-[0.6rem] py-[0.3rem] no-underline transition-colors duration-300"
+                      >
+                        {category}
+                      </a>
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
+          )
+        }
+
+        {
+          eyecatchUrl && (
+            <Image
+              class="mt-4 block h-auto w-full rounded-md shadow-[0_2px_10px_rgba(0,0,0,0.5)]"
+              src={eyecatchUrl}
+              alt={eyecatchAlt}
+              width={1200}
+              height={600}
+            />
+          )
+        }
+      </header>
+
+      <Prose html={content} />
+
+      <footer class="border-tag mt-8 flex flex-col gap-4 border-t pt-4">
+        <div class="flex items-center gap-2 text-[0.9rem]">
+          <span>Share:</span>
+          <a
+            href="#twitter"
+            class="text-primary bg-tag ease hover:bg-tag-hover rounded px-[0.6rem] py-[0.3rem] no-underline transition-colors duration-300"
+          >
+            Twitter
+          </a>
+          <a
+            href="#facebook"
+            class="text-primary bg-tag ease hover:bg-tag-hover rounded px-[0.6rem] py-[0.3rem] no-underline transition-colors duration-300"
+          >
+            Facebook
+          </a>
+        </div>
+      </footer>
+    </article>
+  </main>
 </BaseLayout>

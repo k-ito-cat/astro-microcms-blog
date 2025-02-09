@@ -1,21 +1,54 @@
 ---
+import { Image } from "astro:assets";
 import BaseLayout from "~/layouts/BaseLayout.astro";
 import { getBlogs } from "~/libs/microcms.ts";
 
-const _getBlogs = await getBlogs({ fields: ["id", "title", "content"] });
+const blogs = await getBlogs();
 ---
 
 <BaseLayout title="ブログ一覧">
-  <ul>
+  <ul
+    class="bg-base grid grid-cols-[repeat(auto-fill,minmax(280px,1fr))] gap-4 p-4"
+  >
     {
-      _getBlogs.contents.map((content) => (
-        <li>
-          <a href={`/blog/${content.id}`}>
-            <p>{content.title}</p>
-            <div>{content.content}</div>
-          </a>
-        </li>
-      ))
+      blogs.contents.map((blog) => {
+        return (
+          <li>
+            <a href={`/blog/${blog.id}`}>
+              <article class="ease flex flex-col overflow-hidden rounded-lg bg-[var(--background-color-card)] shadow-[0_4px_15px_rgba(0,0,0,0.7)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_8px_20px_rgba(0,0,0,0.8)]">
+                {blog.eyecatch && (
+                  <Image
+                    class="block h-auto w-full object-cover"
+                    src={blog.eyecatch.url}
+                    alt={blog.eyecatch.alt ? blog.eyecatch.alt : blog.title}
+                    width={blog.eyecatch.width}
+                    height={blog.eyecatch.height}
+                  />
+                )}
+                <div class="flex flex-col gap-2 p-4 text-[#f0f0f0]">
+                  <h2 class="m-0 text-[1.2rem] font-semibold">{blog.title}</h2>
+                  {blog.categories && (
+                    <ul class="flex flex-wrap gap-2">
+                      {blog.categories.map((category: string) => {
+                        return (
+                          <li class="bg-tag text-small rounded-sm px-2 py-1">
+                            {category}
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  )}
+                  <div class="flex items-center justify-between">
+                    <span class="text-[0.85rem] text-[#999999]">
+                      {new Date(blog.publishedAt).toLocaleDateString()}
+                    </span>
+                  </div>
+                </div>
+              </article>
+            </a>
+          </li>
+        );
+      })
     }
   </ul>
 </BaseLayout>
