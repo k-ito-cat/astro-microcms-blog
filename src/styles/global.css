@@ -1,1 +1,33 @@
 @import "tailwindcss";
+
+/* TODO: google font */
+
+:root {
+  --font-display: "sans-serif";
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 1024px;
+
+  /* primitive */
+  --color-white-100: #ffffff;
+  --color-black-100: #000000;
+  --color-gray-100: #dedede;
+  --color-gray-200: #cccccc;
+  --color-gray-300: #999999;
+  --color-blue-100: #333333;
+  --color-blue-200: #555555;
+  --bg-dark-100: #121212;
+  --bg-card-100: #1c1c1c;
+  --border-dark-100: #000000;
+}
+
+@theme {
+  --breakpoint-*: initial;
+  --breakpoint-md: var(--breakpoint-md);
+  --breakpoint-lg: var(--breakpoint-lg);
+  
+  --primary: var(--color-white-100);
+  --secondary: var(--color-gray-200);
+  --bg-base: var(--bg-dark-100);
+  --card-bg: var(--bg-card-100);
+  --border-base: var(--border-dark-100);
+}
