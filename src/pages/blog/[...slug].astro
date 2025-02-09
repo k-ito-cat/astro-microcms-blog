@@ -22,7 +22,7 @@ if (!page) return Astro.redirect("/404");
 const { title, text } = page;
 ---
 
-<BaseLayout title={title}>
+<BaseLayout title={`ブログ｜${title}`}>
   <h1>{title}</h1>
   <p>{text}</p>
 </BaseLayout>

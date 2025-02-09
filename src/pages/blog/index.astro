@@ -5,7 +5,7 @@ const blogs = await getBlogs();
 console.log(blogs);
 ---
 
-<BaseLayout>
+<BaseLayout title="ブログ一覧">
   <ul>
     {
       blogs.contents.map((blog) => (
