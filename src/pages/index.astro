@@ -3,7 +3,6 @@ import BaseLayout from "~/layouts/BaseLayout.astro";
 import { getBlogs } from "~/libs/microcms.ts";
 
 const _getBlogs = await getBlogs({ fields: ["id", "title", "content"] });
-console.log(_getBlogs.contents);
 ---
 
 <BaseLayout title="ブログ一覧">

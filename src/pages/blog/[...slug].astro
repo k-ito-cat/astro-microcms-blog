@@ -1,4 +1,5 @@
 ---
+import Prose from "~/components/Prose.astro";
 import BaseLayout from "~/layouts/BaseLayout.astro";
 import { getBlogs } from "~/libs/microcms.ts";
 
@@ -12,17 +13,17 @@ const pages = response.map((res) => {
   return {
     slug: res.id,
     title: res.title,
-    text: res.content,
+    content: res.content,
   };
 });
 
 const { slug } = Astro.params;
 const page = await pages.find((page) => page.slug === slug);
 if (!page) return Astro.redirect("/404");
-const { title, text } = page;
+const { title, content } = page;
 ---
 
-<BaseLayout title={title}>
+<BaseLayout title={`ブログ｜${title}`}>
   <h1>{title}</h1>
-  <p>{text}</p>
+  <Prose html={content}/>
 </BaseLayout>
