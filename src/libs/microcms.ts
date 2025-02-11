@@ -4,6 +4,7 @@ import {
   type MicroCMSQueries,
 } from "microcms-js-sdk";
 
+console.log(process.env.MICROCMS_SERVICE_DOMAIN);
 const client = createClient({
   serviceDomain: process.env.MICROCMS_SERVICE_DOMAIN as string, // 環境変数があるという前提
   apiKey: process.env.MICROCMS_API_KEY as string,
