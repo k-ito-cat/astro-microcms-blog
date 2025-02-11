@@ -6,8 +6,8 @@ import {
 
 
 const client = createClient({
-  serviceDomain: import.meta.env.MICROCMS_SERVICE_DOMAIN as string, // 環境変数があるという前提
-  apiKey: import.meta.env.MICROCMS_API_KEY as string,
+  serviceDomain: process.env.MICROCMS_SERVICE_DOMAIN as string, // 環境変数があるという前提
+  apiKey: process.env.MICROCMS_API_KEY as string,
 });
 
 export type Blog = {
