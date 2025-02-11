@@ -25,7 +25,6 @@
 }
 
 @theme {
-  --font-family-ja: "Noto Sans JP", "sans-serif";
   --breakpoint-*: initial;
   --breakpoint-md: var(--breakpoint-md);
   --breakpoint-lg: var(--breakpoint-lg);
@@ -56,5 +55,5 @@
 
 html,
 body {
-  @apply font-family-ja text-primary bg-base;
+  @apply text-primary bg-base;
 }
