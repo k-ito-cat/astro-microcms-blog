@@ -1,5 +1,5 @@
 ---
-import { Image } from "astro:assets";
+// import { Image } from "astro:assets";
 import BaseLayout from "~/layouts/BaseLayout.astro";
 import { getBlogs } from "~/libs/microcms.ts";
 
@@ -19,7 +19,7 @@ console.log(process.env.MICROCMS_SERVICE_DOMAIN);
             <a href={`/blog/${blog.id}`}>
               <article class="ease flex flex-col overflow-hidden rounded-lg bg-[var(--background-color-card)] shadow-[0_4px_15px_rgba(0,0,0,0.7)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_8px_20px_rgba(0,0,0,0.8)]">
                 {blog.eyecatch && (
-                  <Image
+                  <img
                     class="block h-auto w-full object-cover"
                     src={blog.eyecatch.url}
                     alt={blog.eyecatch.alt ? blog.eyecatch.alt : blog.title}
