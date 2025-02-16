@@ -12,8 +12,27 @@ const client = createClient({
 export type Blog = {
   title: string;
   content: string;
+  categories: string[];
+  eyecatch: {
+    url: string;
+    alt: string;
+    width: number;
+    height: number;
+  };
+  publishedAt: string;
 } & MicroCMSListContent;
 
 export const getBlogs = async (queries?: MicroCMSQueries) => {
-  return await client.getList({ endpoint: "blogs", queries });
+  return await client.getList<Blog>({ endpoint: "blogs", queries });
+};
+
+export const getBlogDetail = async (
+  contentId: string,
+  queries?: MicroCMSQueries,
+) => {
+  return await client.getListDetail<Blog>({
+    endpoint: "blogs",
+    contentId,
+    queries,
+  });
 };
