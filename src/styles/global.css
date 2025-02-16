@@ -14,6 +14,7 @@
   --color-gray-500: #333333;
   --color-blue-100: #81d4fa;
   --color-blue-200: #4fc3f7;
+  --color-red-100: #FF6F61;
   --bg-dark-100: #121212;
   --bg-card-100: #1c1c1c;
   --border-dark-100: #000000;
@@ -25,16 +26,18 @@
 }
 
 @theme {
+  /* semantic */
   --breakpoint-*: initial;
   --breakpoint-md: var(--breakpoint-md);
   --breakpoint-lg: var(--breakpoint-lg);
 
   --color-*: initial;
   --color-primary: var(--color-white-100);
-  --color-secondary: var(--color-gray-200);
+  --color-secondary: var(--color-gray-100);
   --color-link: var(--color-blue-100);
   --color-link-hover: var(--color-blue-200);
   --color-meta: var(--color-gray-300);
+  --color-code: var(--color-red-100);
 
   --background-color-*: initial;
   --background-color-base: var(--bg-dark-100);
