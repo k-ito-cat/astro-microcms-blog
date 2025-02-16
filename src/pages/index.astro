@@ -1,11 +1,14 @@
 ---
+console.log(
+  "環境変数:",
+  process.env.MICROCMS_SERVICE_DOMAIN,
+  process.env.MICROCMS_API_KEY,
+);
 // import { Image } from "astro:assets";
 import BaseLayout from "~/layouts/BaseLayout.astro";
 import { getBlogs } from "~/libs/microcms.ts";
 
 const blogs = await getBlogs();
-
-console.log(process.env.MICROCMS_SERVICE_DOMAIN);
 ---
 
 <BaseLayout title="ブログ一覧">
