@@ -32,25 +32,25 @@ const headings = extractHeadings(content);
 <main class="relative mx-auto max-w-[1200px] bg-transparent px-4 py-8">
   <a href="/"> 一覧に戻る </a>
   <div class="grid gap-4 lg:grid-cols-[minmax(0,auto)_30%]">
-    <nav
-      class="bg-tag scroll sticky top-4 order-1 h-max max-h-[calc(100vh-32px)] overflow-scroll rounded-lg px-12 py-8 shadow-lg md:order-2"
-    >
-      <ul class="list-disc space-y-3">
-        {
-          headings.map((heading) => (
-            <li class:list={{ "ml-4": heading.level === 3 }}>
-              <a
-                href={`#${heading.id}`}
-                class:list={{ "font-bold": heading.level === 2 }}
-                class="text-link hover:text-link-hover transition-colors"
-              >
-                {heading.text}
-              </a>
-            </li>
-          ))
-        }
-      </ul>
-    </nav>
+    {
+      headings.length > 0 && (
+        <nav class="bg-tag scroll sticky top-4 order-1 h-max max-h-[calc(100vh-32px)] overflow-scroll rounded-lg px-12 py-8 shadow-lg md:order-2">
+          <ul class="list-disc space-y-3">
+            {headings.map((heading) => (
+              <li class:list={{ "ml-4": heading.level === 3 }}>
+                <a
+                  href={`#${heading.id}`}
+                  class:list={{ "font-bold": heading.level === 2 }}
+                  class="text-link hover:text-link-hover transition-colors"
+                >
+                  {heading.text}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      )
+    }
     <article class="bg-card rounded-lg p-8 shadow-[0_4px_15px_rgba(0,0,0,0.7)]">
       <header class="mb-8">
         <h1 class="text-heading-first mb-2 font-semibold">
