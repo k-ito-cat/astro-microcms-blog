@@ -1,7 +1,6 @@
 ---
 // import { Image } from "astro:assets";
 import Article from "~/components/Article.astro";
-import Prose from "~/components/Prose.astro";
 import BaseLayout from "~/layouts/BaseLayout.astro";
 import { getBlogDetail } from "~/libs/microcms.ts";
 
@@ -24,8 +23,8 @@ const { title, content, categories, publishedAt, eyecatch } = blogs;
       title,
       publishedAt,
       categories,
-      eyecatchUrl: eyecatch.url,
-      eyecatchAlt: eyecatch.alt,
+      eyecatchUrl: eyecatch ? eyecatch.url : "",
+      eyecatchAlt: eyecatch ? eyecatch.alt : "",
       content,
     }}
   />
