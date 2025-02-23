@@ -28,6 +28,22 @@ const page = await pages.find((page) => page.slug === slug);
 if (!page) return Astro.redirect("/404");
 const { title, content, categories, publishedAt, eyecatchAlt, eyecatchUrl } =
   page;
+
+function extractHeadings(html: any) {
+  const regex = /<h([2-3])\s+id="([^"]+)">([^<]+)<\/h[2-3]>/g;
+  const headings = [];
+  let match;
+  while ((match = regex.exec(html)) !== null) {
+    headings.push({
+      level: Number(match[1]),
+      id: match[2],
+      text: match[3],
+    });
+  }
+  return headings;
+}
+
+const headings = extractHeadings(content);
 ---
 
 <BaseLayout title={`ブログ｜${title}`}>
@@ -78,6 +94,24 @@ const { title, content, categories, publishedAt, eyecatchAlt, eyecatchUrl } =
         }
       </header>
 
+      <nav class="bg-tag rounded-lg px-12 py-8 shadow-lg">
+        <ul class="list-disc space-y-3">
+          {
+            headings.map((heading) => (
+              <li class:list={{ "ml-4": heading.level === 3 }}>
+                <a
+                  href={`#${heading.id}`}
+                  class:list={{ "font-bold": heading.level === 2 }}
+                  class="text-link hover:text-link-hover transition-colors"
+                >
+                  {heading.text}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+
       <Prose html={content} />
 
       <footer class="border-tag mt-8 flex flex-col gap-4 border-t pt-4">
@@ -100,3 +134,10 @@ const { title, content, categories, publishedAt, eyecatchAlt, eyecatchUrl } =
     </article>
   </main>
 </BaseLayout>
+
+<style is:global>
+  h2,
+  h3 {
+    scroll-margin-top: 18px;
+  }
+</style>
