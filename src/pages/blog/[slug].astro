@@ -1,5 +1,6 @@
 ---
 // import { Image } from "astro:assets";
+import Article from "~/components/Article.astro";
 import Prose from "~/components/Prose.astro";
 import BaseLayout from "~/layouts/BaseLayout.astro";
 import { getBlogs } from "~/libs/microcms.ts";
@@ -28,116 +29,17 @@ const page = await pages.find((page) => page.slug === slug);
 if (!page) return Astro.redirect("/404");
 const { title, content, categories, publishedAt, eyecatchAlt, eyecatchUrl } =
   page;
-
-function extractHeadings(html: any) {
-  const regex = /<h([2-3])\s+id="([^"]+)">([^<]+)<\/h[2-3]>/g;
-  const headings = [];
-  let match;
-  while ((match = regex.exec(html)) !== null) {
-    headings.push({
-      level: Number(match[1]),
-      id: match[2],
-      text: match[3],
-    });
-  }
-  return headings;
-}
-
-const headings = extractHeadings(content);
 ---
 
 <BaseLayout title={`ブログ｜${title}`}>
-  <main class="mx-auto max-w-[1200px] bg-transparent px-4 py-8">
-    <a href="/"> 一覧に戻る </a>
-    <article class="bg-card rounded-lg p-8 shadow-[0_4px_15px_rgba(0,0,0,0.7)]">
-      <header class="mb-8">
-        <h1 class="text-heading-first mb-2 font-semibold">
-          {title}
-        </h1>
-        <div class="text-meta mb-6 flex gap-4 text-[0.9rem]">
-          <span class="text-[0.85rem] text-[#999999]">
-            {publishedAt && new Date(publishedAt).toLocaleDateString()}
-          </span>
-        </div>
-
-        {
-          categories && categories.length > 0 && (
-            <div class="flex items-center gap-2 text-[0.9rem]">
-              <ul class="flex flex-wrap gap-2">
-                {categories.map((category: string) => {
-                  return (
-                    <li>
-                      <a
-                        href={`#${category}`}
-                        class="text-primary bg-tag ease hover:bg-tag-hover rounded px-[0.6rem] py-[0.3rem] no-underline transition-colors duration-300"
-                      >
-                        {category}
-                      </a>
-                    </li>
-                  );
-                })}
-              </ul>
-            </div>
-          )
-        }
-
-        {
-          eyecatchUrl && (
-            <img
-              class="mt-4 block h-auto w-full rounded-md shadow-[0_2px_10px_rgba(0,0,0,0.5)]"
-              src={eyecatchUrl}
-              alt={eyecatchAlt}
-              width={1200}
-              height={600}
-            />
-          )
-        }
-      </header>
-
-      <nav class="bg-tag rounded-lg px-12 py-8 shadow-lg">
-        <ul class="list-disc space-y-3">
-          {
-            headings.map((heading) => (
-              <li class:list={{ "ml-4": heading.level === 3 }}>
-                <a
-                  href={`#${heading.id}`}
-                  class:list={{ "font-bold": heading.level === 2 }}
-                  class="text-link hover:text-link-hover transition-colors"
-                >
-                  {heading.text}
-                </a>
-              </li>
-            ))
-          }
-        </ul>
-      </nav>
-
-      <Prose html={content} />
-
-      <footer class="border-tag mt-8 flex flex-col gap-4 border-t pt-4">
-        <div class="flex items-center gap-2 text-[0.9rem]">
-          <span>Share:</span>
-          <a
-            href="#twitter"
-            class="text-primary bg-tag ease hover:bg-tag-hover rounded px-[0.6rem] py-[0.3rem] no-underline transition-colors duration-300"
-          >
-            Twitter
-          </a>
-          <a
-            href="#facebook"
-            class="text-primary bg-tag ease hover:bg-tag-hover rounded px-[0.6rem] py-[0.3rem] no-underline transition-colors duration-300"
-          >
-            Facebook
-          </a>
-        </div>
-      </footer>
-    </article>
-  </main>
+  <Article
+    {...{
+      title,
+      publishedAt,
+      categories,
+      eyecatchUrl,
+      eyecatchAlt,
+      content,
+    }}
+  />
 </BaseLayout>
-
-<style is:global>
-  h2,
-  h3 {
-    scroll-margin-top: 18px;
-  }
-</style>
