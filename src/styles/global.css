@@ -2,9 +2,6 @@
 @plugin '@tailwindcss/typography';
 
 :root {
-  --breakpoint-md: 768px;
-  --breakpoint-lg: 1024px;
-
   /* primitive */
   --color-white-100: #ffffff;
   --color-gray-100: #dedede;
@@ -14,7 +11,7 @@
   --color-gray-500: #333333;
   --color-blue-100: #81d4fa;
   --color-blue-200: #4fc3f7;
-  --color-red-100: #FF6F61;
+  --color-red-100: #ff6f61;
   --bg-dark-100: #121212;
   --bg-card-100: #1c1c1c;
   --border-dark-100: #000000;
@@ -26,11 +23,6 @@
 }
 
 @theme {
-  /* semantic */
-  --breakpoint-*: initial;
-  --breakpoint-md: var(--breakpoint-md);
-  --breakpoint-lg: var(--breakpoint-lg);
-
   --color-*: initial;
   --color-primary: var(--color-white-100);
   --color-secondary: var(--color-gray-100);
