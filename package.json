@@ -3,9 +3,9 @@
   "type": "module",
   "version": "0.0.1",
   "scripts": {
-    "dev": "op run --env-file=.env.1password -- astro dev",
+    "dev": "op run --environment sjmle7exh2lqxjftur6xo7ghpy -- astro dev",
     "build": "astro build",
-    "build:local": "op run --env-file=.env.1password -- astro build",
+    "build:local": "op run --environment sjmle7exh2lqxjftur6xo7ghpy -- astro build",
     "preview": "astro preview",
     "astro": "astro"
   },
